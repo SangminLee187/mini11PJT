@@ -26,14 +26,6 @@
     </style>
 	<script type="text/javascript">
 
-<%--
-function fncAddProduct(){
-
-document.detailForm.action='/product/addProduct';
-document.detailForm.submit();
-}
---%>
-
 function fncAddProduct() {
 	var prodName = $("input[name='prodName']").val();
 	var prodDetail = $("input[name='prodDetail']").val();
@@ -92,7 +84,7 @@ $(function() {
 		  <div class="form-group">
 		    <label for="manuDate" class="col-sm-offset-1 col-sm-3 control-label">力炼老磊</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="manuDate" name="manuDate" placeholder="力炼老磊">
+		      <input type="text" class="form-control" id="manuDate" name="manuDate" placeholder="力炼老磊" readonly="readonly">
 		      	&nbsp;<img src="../images/ct_icon_date.gif" width="15" height="15" 
 				onclick="show_calendar('document.detailForm.manuDate', document.detailForm.manuDate.value)"/>
 		    </div>

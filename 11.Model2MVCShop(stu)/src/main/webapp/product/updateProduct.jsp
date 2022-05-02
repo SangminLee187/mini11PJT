@@ -31,11 +31,13 @@
 	<!--  ///////////////////////// JavaScript ////////////////////////// -->
 	<script type="text/javascript">
 	function fncUpdateProduct() {
+		var prodNo = $("input[name='prodNo']").val();
 		var prodName = $("input[name='prodName']").val();
 		var prodDetail = $("input[name='prodDetail']").val();
 		var menuDate = $("input[name='menuDate']").val();
 		var price = $("input[name='price']").val();
 		var fileName = $("input[name='fileName']").val();
+		console.log("prodNo :"+prodNo);		//prodNo 확인
 		
 		$("form").attr("method" , "POST").attr("action" , "/product/updateProduct").submit();
 	}
@@ -70,7 +72,15 @@
 	    </div>
 			
 		<form class="form-horizontal" name="detailForm" method="post">
-		<input type="hidden" value="${product.prodNo}" class="prodNo"/>
+		<input type="hidden" value="${product.prodNo}" name="prodNo"/>
+		  
+		  <div class="form-group">
+		    <label for="prodDetail" class="col-sm-offset-1 col-sm-3 control-label">상품번호</label>
+		    <div class="col-sm-4">
+		      <input type="text" class="form-control" id="prodNo" name="prodNo" value="${product.prodNo}"  readonly="readonly">
+		    </div>
+		  </div>
+		  
 		  <div class="form-group">
 		    <label for="prodName" class="col-sm-offset-1 col-sm-3 control-label">상품명</label>
 		    <div class="col-sm-4">
