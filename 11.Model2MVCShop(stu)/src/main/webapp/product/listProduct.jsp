@@ -72,7 +72,7 @@
 								+"제조일 : "+JSONData.manuDate+"<br/>"
 +"<input type='button' value='구매' onclick=location.href='/product/getProduct?prodNo="+JSONData.prodNo+"&menu=${param.menu}'>"
 										+"</h4>";
-						$("h3").remove();
+						$("h4").remove();
 						$( "#"+prodNo+"" ).html(displayValue);	
 					}
 				});

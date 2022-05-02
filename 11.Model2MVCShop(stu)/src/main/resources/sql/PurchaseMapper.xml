@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="PurchaseMapper">
+ 	
+ 	
+	<resultMap id="purchaseSelectMap" type="purchase">
+		<result property="tranNo"				column="TRAN_NO"				jdbcType="INTEGER"/>
+		<result property="paymentOption"				column="PAYMENT_OPTION"				jdbcType="CHAR"/>
+		<result property="receiverName"				column="RECEIVER_NAME"				jdbcType="VARCHAR"/>
+		<result property="receiverPhone"				column="RECEIVER_PHONE"				jdbcType="VARCHAR"/>
+		<result property="divyAddr"				column="DIVY_ADDR"				jdbcType="VARCHAR"/>
+		<result property="divyRequest"				column="DIVY_REQUEST"				jdbcType="VARCHAR"/>
+		<result property="tranCode"				column="TRAN_STATUS_CODE"				jdbcType="CHAR"/>
+		<result property="orderDate"				column="ORDER_DATE"				jdbcType="DATE"/>
+		<result property="divyDate"				column="DIVY_DATE"				jdbcType="DATE"/>
+		
+		<association property="purchaseProd"		javaType="product">
+			<id		 property="prodNo" 				column="prod_no" 				jdbcType="INTEGER"/>
+			<result property="prodName"				column="prod_name"				jdbcType="VARCHAR"/>
+			<result property="prodDetail"			column="prod_detail"			jdbcType="VARCHAR"/>
+			<result property="manuDate"				column="manufacture_day"		jdbcType="VARCHAR"/>
+			<result property="price"				column="price"					jdbcType="INTEGER"/>
+			<result property="fileName"				column="image_file"				jdbcType="VARCHAR"/>
+			<result property="regDate"				column="reg_date"				jdbcType="DATE"/>
+			<result property="proTranCode"			column="pro_tran_code"			jdbcType="VARCHAR"/>			
+		</association>
+		
+		<association property="buyer"	javaType="user">
+			<id property="userId" column="buyer_id" jdbcType="VARCHAR"/>
+			<result property="userName"	column="user_name" 		jdbcType="VARCHAR" />
+			<result property="password" 	column="password" 		jdbcType="VARCHAR" />
+			<result property="role" 				column="role" 					jdbcType="VARCHAR" />
+			<result property="ssn" 				column="ssn" 					jdbcType="VARCHAR" />
+			<result property="phone" 			column="cell_phone" 		jdbcType="VARCHAR" />
+			<result property="addr" 				column="addr" 					jdbcType="VARCHAR" />
+			<result property="email" 			column="email" 				jdbcType="NUMERIC"  />
+			<result property="regDate" 		column="reg_date" 			jdbcType="DATE" />
+		</association>	
+	</resultMap>
+	
+	<!-- SQL : INSERT -->
+	<insert 	id="addPurchase"		parameterType="purchase" >
+	 	INSERT
+		INTO transaction (TRAN_NO, prod_no, buyer_id, PAYMENT_OPTION, RECEIVER_NAME, RECEIVER_PHONE, 
+							DIVY_ADDR, DIVY_REQUEST, TRAN_STATUS_CODE, ORDER_DATE, DIVY_DATE)
+		VALUES	 (seq_transaction_tran_no.NEXTVAL, #{purchaseProd.prodNo}, #{buyer.userId}, #{paymentOption},
+					#{receiverName}, #{receiverPhone}, #{divyAddr}, #{divyRequest}, 111, SYSDATE, #{divyDate})
+	 </insert>
+	 
+	 <select 	id="getPurchase"	parameterType="int"	resultMap="purchaseSelectMap">
+		SELECT
+		*
+		FROM
+		transaction
+		WHERE tran_no = #{value}
+	 </select>
+	 
+	 <select  id="getPurchaseList"  parameterType="map"  resultMap="purchaseSelectMap">
+		SELECT *
+			FROM(	SELECT inner_table.*, ROWNUM AS row_seq
+				FROM(
+				<choose>
+					<when test= "userId == admin">
+					SELECT
+					tran_no, prod_no, buyer_id, receiver_name, receiver_phone, tran_status_code
+					FROM
+					transaction
+					</when>
+					<otherwise>
+					SELECT tran_no, prod_no, buyer_id, receiver_name, receiver_phone, tran_status_code
+					FROM transaction			
+					</otherwise>
+				</choose>
+				WHERE buyer_id= #{userId} ) inner_table
+			WHEREROWNUM &lt;= #{endRowNum} )
+		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 	 
+	 </select>
+	 
+ 	<select  id="getTotalCount"  parameterType="search"	 resultType="int">
+	  	SELECT COUNT(*)
+	  	FROM(	SELECT tran_no, receiver_name, receiver_phone, tran_status_code
+						FROM transaction
+						<if test="searchCondition != null">
+							<where>
+								<if test="searchCondition != null">
+									<if test="searchKeyword != null or searchKeyword !='' ">
+						 				buyer_id = #{userId}
+									</if>												
+								</if>
+							</where>
+						</if> ) countTable						
+	</select> 
+</mapper>

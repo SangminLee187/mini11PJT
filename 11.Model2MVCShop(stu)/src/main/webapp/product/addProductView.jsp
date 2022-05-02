@@ -62,7 +62,7 @@ $(function() {
 	       <h3>판매상품등록</h3>
 	    </div>
 			
-		<form class="form-horizontal" name="detailForm" method="post">
+		<form class="form-horizontal" name="detailForm" method="post" enctype="multipart/form-data">
 		
 		  <div class="form-group">
 		    <label for="prodName" class="col-sm-offset-1 col-sm-3 control-label">상품명</label>
@@ -100,7 +100,7 @@ $(function() {
 		   <div class="form-group">
 		    <label for="ssn" class="col-sm-offset-1 col-sm-3 control-label">상품이미지</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="fileName" name="fileName" placeholder="상품이미지">
+		      <input type="file" class="form-control" id="fileName" name="fileName" placeholder="상품이미지">
 		    </div>
 		  </div>
 		  
