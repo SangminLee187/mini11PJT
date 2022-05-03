@@ -91,7 +91,7 @@
 		   <div class="form-group">
 		    <label for="ssn" class="col-sm-offset-1 col-sm-3 control-label">상품이미지</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="fileName" name="fileName" placeholder="상품이미지" value="${product.fileName}">
+		      <img alt="" src="/images/uploadFiles/${product.fileName}">
 		    </div>
 		  </div>
 		  

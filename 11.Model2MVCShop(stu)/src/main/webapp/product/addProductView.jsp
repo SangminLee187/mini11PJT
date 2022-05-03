@@ -32,8 +32,9 @@ function fncAddProduct() {
 	var menuDate = $("input[name='menuDate']").val();
 	var price = $("input[name='price']").val();
 	var fileName = $("input[name='fileName']").val();
-	
+		
 	$("form").attr("method" , "POST").attr("action" , "/product/addProduct").submit();
+
 }
 
 $(function() {
@@ -62,7 +63,7 @@ $(function() {
 	       <h3>판매상품등록</h3>
 	    </div>
 			
-		<form class="form-horizontal" name="detailForm" method="post" enctype="multipart/form-data">
+		<form class="form-horizontal" name="detailForm" enctype="multipart/form-data">
 		
 		  <div class="form-group">
 		    <label for="prodName" class="col-sm-offset-1 col-sm-3 control-label">상품명</label>
@@ -91,16 +92,16 @@ $(function() {
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="ssn" class="col-sm-offset-1 col-sm-3 control-label">가격</label>
+		    <label for="price" class="col-sm-offset-1 col-sm-3 control-label">가격</label>
 		    <div class="col-sm-4">
 		      <input type="text" class="form-control" id="price" name="price" placeholder="가격">
 		    </div>
 		  </div>
 		 		  
 		   <div class="form-group">
-		    <label for="ssn" class="col-sm-offset-1 col-sm-3 control-label">상품이미지</label>
+		    <label for="file" class="col-sm-offset-1 col-sm-3 control-label">상품이미지</label>
 		    <div class="col-sm-4">
-		      <input type="file" class="form-control" id="fileName" name="fileName" placeholder="상품이미지">
+		      <input type="file" class="form-control" id="file" name="file" placeholder="상품이미지">
 		    </div>
 		  </div>
 		  

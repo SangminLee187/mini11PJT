@@ -1,5 +1,6 @@
 package com.model2.mvc.web.product;
 
+import java.io.File;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.model2.mvc.common.Page;
 import com.model2.mvc.common.Search;
@@ -31,6 +33,7 @@ public class ProductController {
 	private ProductService productService;
 	//setter Method 구현 않음
 		
+	private final String temDir = "C:\\Users\\bitcamp\\git\\mini11PJT\\11.Model2MVCShop(stu)\\src\\main\\webapp\\images\\uploadFiles";
 	public ProductController(){
 		System.out.println(this.getClass());
 	}
@@ -45,9 +48,24 @@ public class ProductController {
 	
 	@RequestMapping("/addProduct")
 //	@RequestMapping(value="addProduct", method=RequestMethod.POST)
-	public String addProduct(@ModelAttribute("product")Product product) throws Exception{
+	public String addProduct(@ModelAttribute("product")Product product,
+								@RequestParam("file")MultipartFile file) throws Exception{
 		System.out.println("/addProduct : POST");
-		
+		System.out.println("file : "+file);
+		////////////////////file upload/////////////////////////////
+
+        if (!file.isEmpty()) {
+            String filename = file.getOriginalFilename();
+
+            String fullPath = temDir +"\\"+ filename;
+            file.transferTo(new File(fullPath));
+            
+            System.out.println("fullPath : "+fullPath);
+            
+            product.setFileName(filename);
+           
+        }
+        
 		productService.addProduct(product);
 		
 		return "forward:/product/readProduct.jsp"; 
@@ -102,10 +120,23 @@ System.out.println("menu : "+menu);			//menu값 확인
 	}
 	
 	@RequestMapping(value="updateProduct", method = RequestMethod.POST)
-	public String updateProduct(@ModelAttribute("product")Product product, Model model) throws Exception{
+	public String updateProduct(@ModelAttribute("product")Product product, Model model,
+						@RequestParam("file")MultipartFile file) throws Exception{
 		
 		System.out.println("/updateProduct : POST");
 	
+        if (!file.isEmpty()) {
+            String filename = file.getOriginalFilename();
+
+            String fullPath = temDir +"\\"+ filename;
+            file.transferTo(new File(fullPath));
+            
+            System.out.println("fullPath : "+fullPath);
+            
+            product.setFileName(filename);
+           
+        }
+		
 		productService.updateProduct(product);
 				
 		model.addAttribute("product", product);

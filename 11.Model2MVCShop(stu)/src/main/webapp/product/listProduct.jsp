@@ -153,10 +153,26 @@
      
 	<tbody>
 		<c:set var="i" value="0" />
-		<c:forEach var="product" items="${list}">
+
+<div class="row">
+		<c:forEach var="product" items="${list}">		
 			<c:set var="i" value="${ i+1 }" />
 			<tr class="ct_list_pop">
 				<td align="center">${ i }</td>
+			  
+			  <!-- ½æ³×ÀÏ -->
+				  <div class="col-sm-6 col-md-4">
+				    <div class="thumbnail" style="height : 400px;">
+				      <img src="/images/uploadFiles/${product.fileName}" alt="..." width="242" height="200">
+				      <div class="caption">
+				        <h3>${product.prodName}</h3>
+				        <p>${product.prodDetail}</p>
+				        <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
+				      </div>
+				    </div>
+				  </div>
+				
+				
 				<td align="left" >
 					<input type="hidden" value="${product.prodNo}" class="prodNo"/>				
 					<c:if test="${ !empty product.proTranCode}">
@@ -190,6 +206,8 @@
 				</td>
 			</tr>
 		</c:forEach>
+</div>
+
 	</tbody>
 </table>
 	<!--  table End /////////////////////////////////////-->
