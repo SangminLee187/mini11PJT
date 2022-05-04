@@ -92,10 +92,10 @@ public class PurchaseController {
 	}
 	
 	@RequestMapping("/getPurchaseList")
-	public ModelAndView getPurchaseList(@ModelAttribute("search")Search search, 
+	public ModelAndView getPurchaseList(@ModelAttribute("search")Search search, String userId, 
 								HttpSession session , Model model) throws Exception{
 		
-		String sessionId=((User)session.getAttribute("user")).getUserId();
+		userId=((User)session.getAttribute("user")).getUserId();
 
 		System.out.println("/PurchaseList");
 		
@@ -104,7 +104,7 @@ public class PurchaseController {
 		}
 		search.setPageSize(pageSize);
 		
-		Map<String, Object> map = purchaseService.getPurchaseList(search,sessionId);
+		Map<String, Object> map = purchaseService.getPurchaseList(search,userId);
 		
 		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
 		System.out.println(resultPage);
@@ -114,6 +114,7 @@ public class PurchaseController {
 		modelAndView.addObject("list", map.get("list"));
 		modelAndView.addObject("resultPage", resultPage);
 		modelAndView.addObject("search", search);
+		modelAndView.addObject("userId", userId);
 		
 		return modelAndView;
 	}
