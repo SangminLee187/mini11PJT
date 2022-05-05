@@ -25,14 +25,19 @@
             margin-top: 50px;
         }
     </style>
+    
 	<script type="text/javascript">
-			$( "button.btn.btn-primary" ).on("click" , function() {
-				$(window.parent.frames["rightFrame"].document.location).attr("href","/purchase/addPurchase?prodNo=${product.prodNo}");
-			});
-			
-			$("a[href='#' ]").on("click" , function() {
-				self.location = "/product/listProduct?menu=search"
-			});		
+			$(function() {
+				$( "button.btn.btn-primary" ).on("click" , function() {
+					var prodNo = $("#prodNo").val();
+					self.location = "/purchase/addPurchaseView.jsp?prodNo="+prodNo
+				});
+				
+				$("a[href='#' ]").on("click" , function() {
+					self.location = "/product/listProduct?menu=search"
+				});											
+			});	
+	
 	</script>
 	
 </head>
@@ -49,13 +54,13 @@
 		<div class="page-header text-info">
 	       <h3>상품상세보기</h3>
 	    </div>
-			
+			<input type="hidden" id="prodNo" value="${product.prodNo}"/>
 		<form class="form-horizontal" name="detailForm" method="post">
 		
 		  <div class="form-group">
 		    <label for="prodName" class="col-sm-offset-1 col-sm-3 control-label">상품명</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="prodName" name="prodName" placeholder="상품명" value="${product.prodName}">
+		      <input type="text" class="form-control" id="prodName" name="prodName" placeholder="상품명" value="${product.prodName}" readonly="readonly">
 
 		    </div>
 		    <div class="col-sm-3">
@@ -65,21 +70,21 @@
 		  <div class="form-group">
 		    <label for="prodDetail" class="col-sm-offset-1 col-sm-3 control-label">상품상세정보</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="prodDetail" name="prodDetail" placeholder="상품상세정보" value="${product.prodDetail}">
+		      <input type="text" class="form-control" id="prodDetail" name="prodDetail" placeholder="상품상세정보" value="${product.prodDetail}" readonly="readonly">
 		    </div>
 		  </div>
 		  
 		  <div class="form-group">
 		    <label for="manuDate" class="col-sm-offset-1 col-sm-3 control-label">제조일자</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="manuDate" name="manuDate" placeholder="제조일자" value="${product.manuDate}">
+		      <input type="text" class="form-control" id="manuDate" name="manuDate" placeholder="제조일자" value="${product.manuDate}" readonly="readonly">
 		    </div>
 		  </div>
 		  
 		  <div class="form-group">
 		    <label for="ssn" class="col-sm-offset-1 col-sm-3 control-label">가격</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="price" name="price" placeholder="가격" value="${product.price}">
+		      <input type="text" class="form-control" id="price" name="price" placeholder="가격" value="${product.price}" readonly="readonly">
 		    </div>
 		  </div>
 		 		  

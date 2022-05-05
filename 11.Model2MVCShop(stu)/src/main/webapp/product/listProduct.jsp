@@ -44,7 +44,7 @@
 		
 	//============= prodName 에 물품상세보기  Event  처리(Click) =============	
 	 $(function() {
-		$( ".ct_list_pop td:nth-child(2)" ).on("click" , function() {
+		$( ".thumbnail" ).on("click" , function() {
 			var prodNo = $(this).find('.prodNo').val();
 			self.location ="/product/getProduct?prodNo="+prodNo+"&menu=${param.menu}";
 		});
@@ -138,19 +138,7 @@
 	<!-- table 위쪽 검색 End //////////////////////////////////////////////////////////////////-->
 
     <!--  table Start /////////////////////////////////////-->
-<table class="table table-hover table-striped" >
-   
-	<thead>
-		<tr>
-		 <th align="center">번호</th>
-		 <th align="left" >상품명</th>
-		 <th align="left">가격</th>
-		 <th align="left">등록일</th>
-		 <th align="left">현재상태</th>
-		 <th align="left">정보보기</th>
-		</tr>
-	</thead>
-     
+        
 	<tbody>
 		<c:set var="i" value="0" />
 
@@ -158,31 +146,39 @@
 		<c:forEach var="product" items="${list}">		
 			<c:set var="i" value="${ i+1 }" />
 			<tr class="ct_list_pop">
-				<td align="center">${ i }</td>
 			  
 			  <!-- 썸네일 -->
 				  <div class="col-sm-6 col-md-4">
-				    <div class="thumbnail" style="height : 400px;">
+				    <div class="thumbnail" style="height : 450px;">
+				    <input type="hidden" value="${product.prodNo}" class="prodNo"/>				
 				      <img src="/images/uploadFiles/${product.fileName}" alt="..." width="242" height="200">
 				      <div class="caption">
+						<c:if test= "${empty product.proTranCode }"> 판매중		
+						</c:if>
+						<c:if test= "${product.proTranCode == '111'}"> 구매완료
+						<c:if test="${user.role == 'admin'}">
+						<a href="/purchase/updateTranCode?prodNo=${product.prodNo}&tranCode=222">배송하기</a>
+						</c:if>
+						</c:if>	
+						<c:if test= "${product.proTranCode == '222'}"> 배송중
+						</c:if>
+						<c:if test= "${product.proTranCode == '333'}"> 배송완료 
+						</c:if>
 				        <h3>${product.prodName}</h3>
+				        <h4>${product.price}원</h4>
 				        <p>${product.prodDetail}</p>
-				        <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
 				      </div>
 				    </div>
 				  </div>
-				
-				
+				<!-- 썸네일 -->
+				<!-- 
 				<td align="left" >
-					<input type="hidden" value="${product.prodNo}" class="prodNo"/>				
 					<c:if test="${ !empty product.proTranCode}">
 						${product.prodName}
 					</c:if>
 					<c:if test="${empty product.proTranCode }">
 						${product.prodName}
-					<!-- 
-					<input type="hidden" value="${product.prodNo}" class="hiddenProduct"/>
-					 -->
+					
 					</c:if>
 				</td>
 				<td align="left">${product.price}</td>
@@ -191,7 +187,7 @@
 					<c:if test= "${empty product.proTranCode }"> 판매중		
 					</c:if>
 					<c:if test= "${product.proTranCode == '111'}"> 구매완료
-					<c:if test="${user.role == 'admin'}">	
+					<c:if test="${user.role == 'admin'}">
 					<a href="/purchase/updateTranCode?prodNo=${product.prodNo}&tranCode=222">배송하기</a>
 					</c:if>
 					</c:if>	
@@ -203,13 +199,12 @@
 				<td align="left"><i class="glyphicon glyphicon-ok" id= "${product.prodNo}"></i>
 					<input type="hidden" value="${product.prodNo}" class="hiddenProduct"/>
 				
-				</td>
+				</td>-->
 			</tr>
 		</c:forEach>
 </div>
 
 	</tbody>
-</table>
 	<!--  table End /////////////////////////////////////-->
 	</div>
 	<!--  화면구성 div End /////////////////////////////////////-->

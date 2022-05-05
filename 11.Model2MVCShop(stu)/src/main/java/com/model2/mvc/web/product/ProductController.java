@@ -33,7 +33,10 @@ public class ProductController {
 	private ProductService productService;
 	//setter Method 구현 않음
 		
-	private final String temDir = "C:\\Users\\bitcamp\\git\\mini11PJT\\11.Model2MVCShop(stu)\\src\\main\\webapp\\images\\uploadFiles";
+	//private final String temDir = "C:\\Users\\bitcamp\\git\\mini11PJT\\11.Model2MVCShop(stu)\\src\\main\\webapp\\images\\uploadFiles";
+	private final String temDir = "C:\\Users\\lsm45\\git\\mini11PJT\\11.Model2MVCShop(stu)\\src\\main\\webapp\\images\\uploadFiles";
+
+	
 	public ProductController(){
 		System.out.println(this.getClass());
 	}

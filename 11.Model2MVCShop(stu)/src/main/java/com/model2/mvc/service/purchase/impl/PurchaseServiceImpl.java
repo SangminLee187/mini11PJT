@@ -46,7 +46,7 @@ public class PurchaseServiceImpl implements PurchaseService{
 		map.put("userId", userId);
 		map.put("search", search);
 		
-		List<Purchase> list = purchaseDao.getPurchaseList(map);
+		List<Object> list = purchaseDao.getPurchaseList(map);
 		
 		return map;
 	}	
