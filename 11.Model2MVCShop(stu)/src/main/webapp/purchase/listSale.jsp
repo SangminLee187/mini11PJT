@@ -1,57 +1,94 @@
-<%@ page contentType="text/html; charset=euc-kr" %>
+<%@ page contentType="text/html; charset=EUC-KR" %>
+<%@ page pageEncoding="EUC-KR"%>
+
+<!--  ///////////////////////// JSTL  ////////////////////////// -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
-<%--
-<@ page import="java.util.List"  
-<%@ page import="com.model2.mvc.service.domain.Purchase" %>
-<%@ page import="com.model2.mvc.service.domain.Product" %>
-<%@ page import="com.model2.mvc.service.domain.User" %>
-<%@ page import="com.model2.mvc.common.Search" %>
-<%@page import="com.model2.mvc.common.Page"%>
-<%@page import="com.model2.mvc.common.util.CommonUtil"%>
-
-List<Purchase> list= (List<Purchase>)request.getAttribute("list");
-Page resultPage=(Page)request.getAttribute("resultPage");
-
-Search search = (Search)request.getAttribute("search");
-//==> null 을 ""(nullString)으로 변경
-String searchCondition = CommonUtil.null2str(search.getSearchCondition());
-String searchKeyword = CommonUtil.null2str(search.getSearchKeyword());
---%>
 
 <html>
 <head>
-<title>판매 목록조회</title>
-
-<link rel="stylesheet" href="/css/admin.css" type="text/css">
-
-<script type="text/javascript">
-function fncGetList(currentPage) {
-	document.getElementById("currentPage").value = currentPage;
-	document.detailForm.submit();	
-	}
-</script>
+	<meta charset="EUC-KR">
+	
+	<!-- 참조 : http://getbootstrap.com/css/   참조 -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	
+	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
+	
+	<!-- Bootstrap Dropdown Hover CSS -->
+   <link href="/css/animate.min.css" rel="stylesheet">
+   <link href="/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
+    <!-- Bootstrap Dropdown Hover JS -->
+   <script src="/javascript/bootstrap-dropdownhover.min.js"></script>
+   
+   <!-- jQuery UI toolTip 사용 CSS-->
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <!-- jQuery UI toolTip 사용 JS-->
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	
+	<!--  ///////////////////////// CSS ////////////////////////// -->
+	<style>
+	  body {padding-top : 50px;}
+    </style>
+    
 </head>
 
-<body bgcolor="#ffffff" text="#000000">
+<body>
+	<!-- ToolBar Start /////////////////////////////////////-->
+	<jsp:include page="/layout/toolbar.jsp" />
+   	<!-- ToolBar End /////////////////////////////////////-->
 
 <div style="width: 98%; margin-left: 10px;">
 
 <form name="detailForm" action="/listSale.do" method="post">
-
-<table width="100%" height="37" border="0" cellpadding="0"   cellspacing="0">
-   <tr>
-      <td width="15" height="37"><img src="/images/ct_ttl_img01.gif"width="15" height="37"></td>
-      <td background="/images/ct_ttl_img02.gif" width="100%" style="padding-left: 10px;">
-         <table width="100%" border="0" cellspacing="0" cellpadding="0">
-            <tr>
-               <td width="93%" class="ct_ttl01">판매 목록조회</td>
-            </tr>
-         </table>
-      </td>
-      <td width="12" height="37"><img src="/images/ct_ttl_img03.gif"   width="12" height="37"></td>
-   </tr>
-</table>
+<!-- 화면구성 시작 -->
+	<div class="container">
+	<!-- 화면이름 -->
+		<div class="page-header text-info">
+			<h3 align="center">판매목록 조회</h3>	
+		</div>
+	<!-- 화면이름 -->
+	<!-- 검색 시작 -->
+		<div class="row">
+	    
+		    <div class="col-md-6 text-left">
+		    	<p class="text-primary">
+		    		전체  ${resultPage.totalCount } 건수, 현재 ${resultPage.currentPage}  페이지
+		    	</p>
+		    </div>
+		    
+		    <div class="col-md-6 text-right">
+			    <form class="form-inline" name="detailForm">
+			    
+				  <div class="form-group">
+				    <select class="form-control" name="searchCondition" >
+						<option value="0" ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>상품번호</option>
+						<option value="1" ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>상품명</option>
+						<option value="2" ${ ! empty search.searchCondition && search.searchCondition==2 ? "selected" : "" }>상품가격</option>
+					</select>
+				  </div>
+				  
+				  <div class="form-group">
+				    <label class="sr-only" for="searchKeyword">검색어</label>
+				    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="검색어"
+				    			 value="${! empty search.searchKeyword ? search.searchKeyword : '' }"  >
+				  </div>
+				  
+				  <button type="button" class="btn btn-default">검색</button>
+				  
+				  <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
+				  <input type="hidden" id="currentPage" name="currentPage" value=""/>
+				  			  
+				</form>
+	    	</div>
+		</div>
+		<!-- 검색 끝 -->
+		
+	
+	</div>
+<!-- 화면구성 끝 -->
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0"   style="margin-top: 10px;">
    <tr>
@@ -106,15 +143,15 @@ function fncGetList(currentPage) {
     <c:set var="i" value="${i+1}"/>
    	<tr classs="ct_list_pop">
     	<td align="center">
-			<a href="/getPurchase.do?tranNo=${purc.tranNo}">${purc.tranNo}</a>
+			<a href="/purchase/getPurchase?tranNo=${purc.tranNo}">${purc.tranNo}</a>
     	</td>
 		<td></td>
 		<td align="center">
-			<a href="/getUser.do?userId=${purc.buyer.userId}">${purc.buyer.userId}</a>
+			<a href="/user/getUser?userId=${purc.buyer.userId}">${purc.buyer.userId}</a>
 		</td>
 		<td></td>
 		<td align="center">
-			<a href="/getProduct.do?prodNo=${purc.purchaseProd.prodNo}"> ${purc.purchaseProd.prodNo}</a>
+			<a href="/product/getProduct?prodNo=${purc.purchaseProd.prodNo}&menu=${param.menu}"> ${purc.purchaseProd.prodNo}</a>
 		</td>
 		<td></td>
 		<td align="center">${purc.receiverPhone}</td>
@@ -145,6 +182,8 @@ function fncGetList(currentPage) {
       <td align="center">
        
  <input type="hidden" id="currentPage" name="currentPage" value=""/>
+ <input type="hidden" id="menu" name="menu" value="${param.menu}"/>
+ 
 			
 			<%--
 			<% if( resultPage.getCurrentPage() <= resultPage.getPageUnit() ){ %>
@@ -163,7 +202,7 @@ function fncGetList(currentPage) {
 					<a href="javascript:fncGetSaleList('<%=resultPage.getEndUnitPage()+1%>')">이후 ▶</a>
 			<% } %>      
 			--%>
-			<jsp:include page="../common/pageNavigator.jsp"/>	
+		<jsp:include page="../common/pageNavigator_new.jsp"/>
 			
       </td>
    </tr>

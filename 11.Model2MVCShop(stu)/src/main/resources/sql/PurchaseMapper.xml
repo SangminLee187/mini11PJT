@@ -60,29 +60,36 @@
 	 </select>
 	 
 	 <select  id="getPurchaseList"  parameterType="map"  resultMap="purchaseSelectMap">
-		SELECT *
-			FROM(	SELECT inner_table.*, ROWNUM AS row_seq
-				FROM(
-					SELECT
-					tran_no, prod_no, buyer_id, receiver_name, receiver_phone, tran_status_code
-					FROM transaction			
-				WHERE buyer_id= #{userId} ) inner_table
-			WHEREROWNUM &lt;= #{endRowNum} )
-		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 	 
-	 </select>
+	  	SELECT *
+	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
+	  			FROM		(	SELECT tran_no, receiver_name, receiver_phone, tran_status_code 
+								FROM transaction
+								<where>
+							 		buyer_id = #{userId}
+								</where>
+						ORDER BY order_date DESC ) inner_table
+				WHERE ROWNUM &lt;= #{search.endRowNum} )
+		WHERE row_seq BETWEEN #{search.startRowNum} AND #{search.endRowNum} 
+	</select>
 	 
- 	<select  id="getTotalCount"  parameterType="search"	 resultType="int">
+ 	<select  id="getTotalCount"	parameterType="map"	resultType="int">
 	  	SELECT COUNT(*)
-	  	FROM(	SELECT tran_no, receiver_name, receiver_phone, tran_status_code
+	  	FROM(	SELECT tran_no
 						FROM transaction
-						<if test="searchCondition != null">
 							<where>
-								<if test="searchCondition != null">
-									<if test="searchKeyword != null or searchKeyword !='' ">
-						 				buyer_id = #{userId}
-									</if>												
-								</if>
+						 		buyer_id = #{userId}
 							</where>
-						</if> ) countTable						
+						 ) countTable						
 	</select> 
+	
+	<select  id="getSaleList"  parameterType="map"	resultMap="purchaseSelectMap">
+	  	SELECT *
+	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
+	  			FROM		(	SELECT tran_no, prod_no, buyer_id, order_date, tran_status_code 
+								FROM transaction								
+								ORDER BY order_date DESC ) inner_table
+				WHERE ROWNUM &lt;= #{endRowNum} )
+		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
+	</select>
+		
 </mapper>

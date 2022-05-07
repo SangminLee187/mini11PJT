@@ -76,6 +76,9 @@
 	                         <c:if test="${sessionScope.user.role == 'user'}">
 	                           <li><a href="#">구매이력조회</a></li>
 	                         </c:if>
+	                         <c:if test="${sessionScope.user.role == 'admin'}">
+	                           <li><a href="#">판매이력조회</a></li>
+	                         </c:if>
 	                         
 	                         <li><a href="#">최근본상품</a></li>
 	                         <li class="divider"></li>
@@ -102,45 +105,39 @@
 	
 		//============= logout Event  처리 =============	
 		 $(function() {
-			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 		 	$("a:contains('로그아웃')").on("click" , function() {
 				$(self.location).attr("href","/user/logout");
-				//self.location = "/user/logout"
 			}); 
 		 });
 		
 		//============= 회원정보조회 Event  처리 =============	
 		 $(function() {
-			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 		 	$("a:contains('회원정보조회')").on("click" , function() {
-				//$(self.location).attr("href","/user/logout");
 				self.location = "/user/listUser"
 			}); 
 		 });
 		
-		//=============  개인정보조회회 Event  처리 =============	
 	 	$( "a:contains('개인정보조회')" ).on("click" , function() {
-	 		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			$(self.location).attr("href","/user/getUser?userId=${sessionScope.user.userId}");
 		});
 		
-		//=============  판매상품등록 Event  처리 =============	
 	 	$( "a:contains('판매상품등록')" ).on("click" , function() {
-	 		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			$(self.location).attr("href","../product/addProductView.jsp");
 		});
 	
-		//=============  판매상품관리 Event  처리 =============	
 	 	$( "a:contains('판매상품관리')" ).on("click" , function() {
-	 		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			$(self.location).attr("href","/product/listProduct?menu=manage");
 		});
+	 	
 	 	$( "a:contains('상 품 검 색')" ).on("click" , function() {
-	 		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			$(self.location).attr("href","/product/listProduct?menu=search");
 		});
+	 	
 	 	$( "a:contains('구매이력조회')" ).on("click" , function() {
-	 		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			$(self.location).attr("href","/purchase/getPurchaseList");
 		});
+	 	
+	 	$( "a:contains('판매이력조회')" ).on("click" , function() {
+			$(self.location).attr("href","/purchase/getSaleList");
+		});	 	
 	</script>  

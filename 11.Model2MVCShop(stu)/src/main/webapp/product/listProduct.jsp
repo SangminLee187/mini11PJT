@@ -42,43 +42,14 @@
 		$("form").attr("method" , "POST").attr("action" , "/product/listProduct").submit();
 	}
 		
-	//============= prodName 에 물품상세보기  Event  처리(Click) =============	
+	//============= 썸네일 물품상세보기  Event  처리(Click) =============	
 	 $(function() {
 		$( ".thumbnail" ).on("click" , function() {
 			var prodNo = $(this).find('.prodNo').val();
 			self.location ="/product/getProduct?prodNo="+prodNo+"&menu=${param.menu}";
-		});
-							
+		});						
 	});	
 	
-	//클릭시 자세히보기 및 구매버튼
-	$(function () {						//start of function
-		$( ".ct_list_pop td:nth-child(6)" ).on("click" , function() {
-			var prodNo = $(this).find('.hiddenProduct').val();
-			$.ajax(
-				{
-					url : "/product/json/getProduct/"+prodNo ,					
-					method : "GET" ,			
-					dataType : "json" ,
-					headers : {
-							"Accept" : "application/json",
-							"Content-Type" : "application/json"
-					},
-					success : function(JSONData , status) {
-						var displayValue = "<h4>"
-								+"제품명 : "+JSONData.prodName+"<br/>"
-								+"가  격 : "+JSONData.price+"<br/>"
-								+"세부사항 : "+JSONData.prodDetail+"<br/>"
-								+"제조일 : "+JSONData.manuDate+"<br/>"
-+"<input type='button' value='구매' onclick=location.href='/product/getProduct?prodNo="+JSONData.prodNo+"&menu=${param.menu}'>"
-										+"</h4>";
-						$("h4").remove();
-						$( "#"+prodNo+"" ).html(displayValue);	
-					}
-				});
-		});
-		$( ".ct_list_pop td:nth-child(2)" ).css("color" , "blue");
-	});
 	</script>
 </head>
 
