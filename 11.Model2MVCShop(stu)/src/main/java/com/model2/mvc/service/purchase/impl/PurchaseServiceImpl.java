@@ -72,5 +72,9 @@ public class PurchaseServiceImpl implements PurchaseService{
 		purchaseDao.updateTranCode(purchaseVO);
 	}
 	
-	
+	public int getTotalCount(Search search) throws Exception{					///추후수정
+		purchaseDao.getTotalCount(search);
+		return 0;
+	}
+
 }
