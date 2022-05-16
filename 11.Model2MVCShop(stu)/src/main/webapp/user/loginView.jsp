@@ -7,7 +7,7 @@
 <html lang="ko">
 	
 <head>
-	<meta charset="EUC-KR">
+	<meta charset="UTF-8">
 	
 	<!-- 참조 : http://getbootstrap.com/css/   참조 -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -116,7 +116,17 @@
 					      <a class="btn btn-primary btn" href="#" role="button">회 &nbsp;원 &nbsp;가 &nbsp;입</a>
 					    </div>
 					  </div>
-			
+					  
+					  <div class="form-group">
+					  	<div>
+							<a class="form-group" href="https://kauth.kakao.com/oauth/authorize?
+							client_id=ab70541f4fbb493e0fd22d7f73cd2940
+							&redirect_uri=http://192.168.0.165:8080/user/kakaoLogin
+							&response_type=code">
+								<img src="/images/kakao_login.png" style="height:60px">
+							</a>
+					  	</div>
+					  </div>
 					</form>
 			   	 </div>
 			

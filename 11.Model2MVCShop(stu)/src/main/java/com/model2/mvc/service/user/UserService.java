@@ -1,5 +1,6 @@
 package com.model2.mvc.service.user;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import com.model2.mvc.common.Search;
@@ -24,4 +25,8 @@ public interface UserService {
 	// 회원 ID 중복 확인
 	public boolean checkDuplication(String userId) throws Exception;
 	
+	public String getAccessToken(String authorization_code) throws Exception;
+	
+	public Map<String, Object> getUserInfo(String access_Token) throws Exception;
+
 }

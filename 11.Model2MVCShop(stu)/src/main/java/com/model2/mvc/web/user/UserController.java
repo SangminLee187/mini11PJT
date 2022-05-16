@@ -1,5 +1,10 @@
 package com.model2.mvc.web.user;
 
+import java.io.BufferedWriter;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,8 +35,9 @@ public class UserController {
 	@Autowired
 	@Qualifier("userServiceImpl")
 	private UserService userService;
+
 	//setter Method 구현 않음
-		
+	
 	public UserController(){
 		System.out.println(this.getClass());
 	}
@@ -173,4 +179,42 @@ public class UserController {
 		
 		return "forward:/user/listUser.jsp";
 	}
+	
+	@RequestMapping(value="/kakaoLogin", method=RequestMethod.GET)
+	public String kakaoLogin(@RequestParam(value = "code", required = false) String code) throws Exception {
+		System.out.println("#########" + code);
+
+		String access_Token = userService.getAccessToken(code);
+		System.out.println("###access_Token#### : " + access_Token);
+		
+		Map<String, Object> userInfo = userService.getUserInfo(access_Token);
+		System.out.println("###access_Token#### : " + access_Token);
+		System.out.println("###nickname#### : " + userInfo.get("nickname"));
+		System.out.println("###email#### : " + userInfo.get("email"));
+		
+		return "forward:/user/test.jsp";
+	}
+	
+	@RequestMapping(value="/kakaoLogout", method=RequestMethod.GET)
+	public String kakaoLogout(@RequestParam(value = "code", required = false) String code) throws Exception {
+		String reqURL = "https://kauth.kakao.com/oauth/logout?"
+				+ "client_id=ab70541f4fbb493e0fd22d7f73cd2940&"
+				+ "logout_redirect_uri=http://192.168.0.165:8080/index.jsp";
+		URL url = new URL(reqURL);
+		
+		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+		conn.setRequestMethod("GET");
+		conn.setDoOutput(true);
+		
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
+		StringBuilder sb = new StringBuilder();
+		       
+		bw.write(sb.toString());
+		bw.flush();
+		
+		int responseCode = conn.getResponseCode();
+		System.out.println("responseCode : " + responseCode);
+		return null;
+	}
+	
 }
