@@ -11,8 +11,8 @@
 	<div>
 			<a class="form-group" 
 			href="https://kauth.kakao.com/oauth/logout?
-				client_id=ab70541f4fbb493e0fd22d7f73cd2940&
-				logout_redirect_uri=http://192.168.0.165:8080/index.jsp">
+			client_id=ab70541f4fbb493e0fd22d7f73cd2940
+			&logout_redirect_uri=http://192.168.0.165:8080/index.jsp">
 				<img src="/images/logout.jpg" >
 			</a>
 	</div>

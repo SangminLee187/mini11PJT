@@ -203,6 +203,22 @@
 											"scrollbars=no,scrolling=no,menubar=no,resizable=no");
 			});
 		});	
+		
+		//==>"인증번호바송" Event 처리 및 연결
+		 $(function() {
+			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+			$("#sendAuth").on("click" , function() {
+			 $("form").attr("method","POST").attr("action","/user/auth").submit();
+			
+			});
+		});
+		 $(function() {
+				//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+			 $("#checkAuth").on("click" , function() {
+					
+				});
+			});		
+		
 
 	</script>		
     
@@ -298,7 +314,7 @@
 		    <div class="col-sm-2">
 		      <input type="text" class="form-control" id="phone3" name="phone3" placeholder="번호">
 		    </div>
-		    <input type="hidden" name="phone"  />
+		    <input type="hidden" name="phone1"  />
 		  </div>
 		  
 		   <div class="form-group">
@@ -314,12 +330,23 @@
 			  <a class="btn btn-primary btn" href="#" role="button">취&nbsp;소</a>
 		    </div>
 		  </div>
-		</form>
-		<!-- form Start /////////////////////////////////////-->
+
 		
+		
+		<div align="center">
+				<a class="form-group">
+					<input type="text" id="phone" name="phone" >
+					<button type="button" id="sendAuth">인증번호발송</button>
+				</a>
+		</div>
+		<div align="center">
+			<input type="text" id="auth">
+			<button type="button" id="checkAuth">인증번호확인</button>
+		</div>
  	</div>
 	<!--  화면구성 div end /////////////////////////////////////-->
-	
+</form>
+<!-- form End /////////////////////////////////////-->	
 </body>
 
 </html>

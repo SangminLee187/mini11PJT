@@ -28,5 +28,10 @@ public interface UserService {
 	public String getAccessToken(String authorization_code) throws Exception;
 	
 	public Map<String, Object> getUserInfo(String access_Token) throws Exception;
+	
+	public String makeSignature(String requestUrl, String timestamp, String method,
+			String accessKey, String secretKey) throws Exception;
+	
+	public void sendSMS(String phone) throws Exception ;
 
 }

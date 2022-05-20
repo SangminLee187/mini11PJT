@@ -195,26 +195,14 @@ public class UserController {
 		return "forward:/user/test.jsp";
 	}
 	
-	@RequestMapping(value="/kakaoLogout", method=RequestMethod.GET)
-	public String kakaoLogout(@RequestParam(value = "code", required = false) String code) throws Exception {
-		String reqURL = "https://kauth.kakao.com/oauth/logout?"
-				+ "client_id=ab70541f4fbb493e0fd22d7f73cd2940&"
-				+ "logout_redirect_uri=http://192.168.0.165:8080/index.jsp";
-		URL url = new URL(reqURL);
-		
-		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-		conn.setRequestMethod("GET");
-		conn.setDoOutput(true);
-		
-		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
-		StringBuilder sb = new StringBuilder();
-		       
-		bw.write(sb.toString());
-		bw.flush();
-		
-		int responseCode = conn.getResponseCode();
-		System.out.println("responseCode : " + responseCode);
-		return null;
+	@RequestMapping(value="/auth", method=RequestMethod.POST)
+	public String auth(@RequestParam(value = "phone") String phone) throws Exception {
+		System.out.println("/user/auth : POST");
+
+		userService.sendSMS(phone);
+		System.out.println("end of auth");
+
+	return "forward:/user/test.jsp";
 	}
 	
 }
